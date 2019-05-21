@@ -19,6 +19,7 @@ cra-redux/
   src/
     actions/
     reducers/
+    middlewares/
     App.css
     App.js
     index.js

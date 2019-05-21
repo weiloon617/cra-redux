@@ -1,24 +1,32 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { simpleAction } from './actions/simpleActions'
 
-import logo from './logo.svg'
+// Actions
+import { changeColor } from './actions/simple'
+
+// Styling
 import './App.css'
+import logo from './logo.svg'
 
-const mapStateToProps = state => ({
-  ...state,
-})
+let index = 0
 
-const mapDispatchToProps = dispatch => ({
-  simpleAction: () => dispatch(simpleAction()),
-})
+const mapStateToProps = state => {
+  const { simple } = state
+  return { simple }
+}
 
 function App(props) {
-  const simpleAction = () => props.simpleAction()
+  const simpleAction = () => {
+    props.dispatch(changeColor(index))
+    index = index + 1
+  }
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header
+        className="App-header"
+        style={{ backgroundColor: props.simple.backgroundColor }}
+      >
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -31,14 +39,12 @@ function App(props) {
         >
           Learn React
         </a>
-        <pre>{JSON.stringify(props)}</pre>
-        <button onClick={simpleAction}>Test redux action</button>
+        <button onClick={simpleAction} className="button">
+          Change Background Color
+        </button>
       </header>
     </div>
   )
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(App)
+export default connect(mapStateToProps)(App)
